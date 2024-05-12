@@ -47,6 +47,6 @@ public class User {//create user file to store the userName and password
     
     @Override
     public String toString(){
-        return userName+","+password;
+        return userName+","+password+","+email;
     }
 }
