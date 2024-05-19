@@ -1,11 +1,11 @@
 "use client"
 import React, { useEffect } from 'react';
-import Link from "next/link"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Button } from "@/components/ui/button"
-import { useRouter } from 'next/navigation';
+import Link from "next/link";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
+import { useRouter } from 'next/navigation'; // Corrected import
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
@@ -20,28 +20,29 @@ const LoginPage = () => {
   const [buttonDisabled, setButtonDisabled] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
-  const onLogin = async () => {
+  const onLogin = async (event) => {
+    event.preventDefault(); // Prevent the default form submission
     try {
-        setLoading(true);
-        const response = await axios.post("/api/users/login", user);
+      setLoading(true);
+      const response = await axios.post("/api/users/login", user);
+      if (response.status === 200) {
         console.log("Login success", response.data);
         toast.success("Login success");
-        router.push("/profile");
-    } catch (error:any) {
-        console.log("Login failed", error.message);
-        toast.error(error.message);
-    } finally{
-    setLoading(false);
+        router.push("/mainpage");
+      } else {
+        throw new Error(`Login failed with status: ${response.status}`);
+      }
+    } catch (error) {
+      console.log("Login failed", error.message);
+      toast.error("Login error occurred");
+    } finally {
+      setLoading(false);
     }
-}
+  };
 
   useEffect(() => {
-    if(user.email.length > 0 && user.password.length > 0) {
-        setButtonDisabled(false);
-    } else{
-        setButtonDisabled(true);
-    }
-}, [user]);
+    setButtonDisabled(!(user.email.length > 0 && user.password.length > 0));
+  }, [user]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8 dark:bg-gray-950">
@@ -50,7 +51,6 @@ const LoginPage = () => {
           <img
             alt="Logo"
             className="mx-auto h-12 w-auto"
-            height={50}
             src="/logo.png"
             style={{
               aspectRatio: "1/1",
@@ -71,7 +71,7 @@ const LoginPage = () => {
             </Link>
           </p>
         </div>
-        <form className="mt-8 space-y-6">
+        <form className="mt-8 space-y-6" onSubmit={onLogin}>
           <input defaultValue="true" name="remember" type="hidden" />
           <div className="-space-y-px rounded-md shadow-sm">
             <div>
@@ -115,7 +115,7 @@ const LoginPage = () => {
             <div className="text-sm">
               <Link
                 className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-500 dark:hover:text-indigo-400"
-                href="#"
+                href="/forgot-password" // Assume this is the correct path for password recovery
               >
                 Forgot your password?
               </Link>
@@ -123,10 +123,9 @@ const LoginPage = () => {
           </div>
           <div>
             <Button
-               onClick={onLogin}
+              onClick={onLogin}
               className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:bg-indigo-500 dark:hover:bg-indigo-600 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-950"
               type="submit"
-              
             >
               {loading ? 'Signing in...' : 'Sign in'}
             </Button>
@@ -134,7 +133,7 @@ const LoginPage = () => {
         </form>
       </div>
     </div>
-  )
+  );
 }
 
 export default LoginPage;
