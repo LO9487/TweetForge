@@ -1,10 +1,19 @@
+"use client";
 import React from 'react';
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
-import { TabsTrigger, TabsList, TabsContent, Tabs } from "@/components/ui/tabs"
+import Link from "next/link";
+import { useRouter } from 'next/navigation';
+import { Button } from "@/components/ui/button";
+import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu";
+import { TabsTrigger, TabsList, TabsContent, Tabs } from "@/components/ui/tabs";
+import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 
 const UserPage = () => {
+  const router = useRouter();
+
+  const handleProfileClick = () => {
+    router.push('/mainpage');
+  };
+
   return (
     <div className="bg-gray-800 text-gray-50 min-h-screen flex flex-col">
       <header className="flex items-center justify-between h-16 px-4 md:px-6 border-b border-gray-700 bg-gray-900">
@@ -17,24 +26,15 @@ const UserPage = () => {
         <div className="flex items-center space-x-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button className="rounded-full border  border-gray-700 w-8 h-8 dark:border-gray-800" size="icon" variant="ghost">
-                <img
-                  alt="Avatar"
-                  className="rounded-full"
-                  height="32"
-                  src="/placeholder.svg"
-                  style={{
-                    aspectRatio: "32/32",
-                    objectFit: "cover",
-                  }}
-                  width="32"
-                />
-                <span className="sr-only">Toggle user menu</span>
-              </Button>
+              <Avatar className="h-8 w-8">
+                <AvatarImage alt="@shadcn" src="/placeholder-avatar.jpg" />
+                <AvatarFallback>JP</AvatarFallback>
+              </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleProfileClick}>MainPage</DropdownMenuItem>
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Logout</DropdownMenuItem>
@@ -53,13 +53,10 @@ const UserPage = () => {
           <Tabs className="w-full max-w-3xl" defaultValue="tweets">
             <TabsList className="flex w-full justify-around border-b border-gray-700">
               <TabsTrigger value="tweets">Tweets</TabsTrigger>
-              <TabsTrigger value="following">Following</TabsTrigger>
-              <TabsTrigger value="followers">Followers</TabsTrigger>
-              <TabsTrigger value="likes">Likes</TabsTrigger>
             </TabsList>
             <TabsContent className="py-6 flex-1" value="tweets">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                <div className="rounded-lg border   p-4 dark:border-gray-800">
+                <div className="rounded-lg border p-4 dark:border-gray-800">
                   <div className="space-y-1">
                     <h3 className="text-lg font-medium">Exploring the Wonders of Nature</h3>
                     <p className="text-gray-400 line-clamp-2">
@@ -67,7 +64,7 @@ const UserPage = () => {
                     </p>
                   </div>
                 </div>
-                <div className="rounded-lg border  border-gray-900  p-4 dark:border-gray-800">
+                <div className="rounded-lg border border-gray-900 p-4 dark:border-gray-800">
                   <div className="space-y-1">
                     <h3 className="text-lg font-medium">The Art of Minimalism</h3>
                     <p className="text-gray-400 line-clamp-2">
@@ -75,7 +72,7 @@ const UserPage = () => {
                     </p>
                   </div>
                 </div>
-                <div className="rounded-lg border  border-gray-900  p-4 dark:border-gray-800">
+                <div className="rounded-lg border border-gray-900 p-4 dark:border-gray-800">
                   <div className="space-y-1">
                     <h3 className="text-lg font-medium">Cooking for Beginners</h3>
                     <p className="text-gray-400 line-clamp-2">
@@ -83,99 +80,7 @@ const UserPage = () => {
                     </p>
                   </div>
                 </div>
-                <div className="rounded-lg border   border-gray-900 p-4 dark:border-gray-800">
-                  <div className="space-y-1">
-                    <h3 className="text-lg font-medium">The Power of Meditation</h3>
-                    <p className="text-gray-400 line-clamp-2">
-                      Discover the transformative benefits of mindfulness and find inner peace.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </TabsContent>
-            <TabsContent className="py-6 flex-1" value="following">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                <div className="rounded-lg border   border-gray-900 p-4 dark:border-gray-800">
-                  <div className="space-y-1">
-                    <h3 className="text-lg font-medium">James</h3>
-                    <p className="text-gray-400">@james</p>
-                  </div>
-                </div>
-                <div className="rounded-lg border border-gray-900  p-4 dark:border-gray-800">
-                  <div className="space-y-1">
-                    <h3 className="text-lg font-medium">Harden</h3>
-                    <p className="text-gray-400">@harden</p>
-                  </div>
-                </div>
-                <div className="rounded-lg border border-gray-900  p-4 dark:border-gray-800">
-                  <div className="space-y-1">
-                    <h3 className="text-lg font-medium">ElonMusk</h3>
-                    <p className="text-gray-400">@elonmusk</p>
-                  </div>
-                </div>
-                <div className="rounded-lg border border-gray-900  p-4 dark:border-gray-800">
-                  <div className="space-y-1">
-                    <h3 className="text-lg font-medium">mark</h3>
-                    <p className="text-gray-400">@mark</p>
-                  </div>
-                </div>
-              </div>
-            </TabsContent>
-            <TabsContent className="py-6 flex-1" value="followers">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                <div className="rounded-lg border border-gray-900  p-4 dark:border-gray-800">
-                  <div className="space-y-1">
-                    <h3 className="text-lg font-medium">James</h3>
-                    <p className="text-gray-400">@james</p>
-                  </div>
-                </div>
-                <div className="rounded-lg border border-gray-900  p-4 dark:border-gray-800">
-                  <div className="space-y-1">
-                    <h3 className="text-lg font-medium">Harden</h3>
-                    <p className="text-gray-400">@harden</p>
-                  </div>
-                </div>
-                <div className="rounded-lg border border-gray-900  p-4 dark:border-gray-800">
-                  <div className="space-y-1">
-                    <h3 className="text-lg font-medium">ElonMusk</h3>
-                    <p className="text-gray-400">@elonmusk</p>
-                  </div>
-                </div>
-                <div className="rounded-lg border border-gray-900  p-4 dark:border-gray-800">
-                  <div className="space-y-1">
-                    <h3 className="text-lg font-medium">mark</h3>
-                    <p className="text-gray-400">@mark</p>
-                  </div>
-                </div>
-              </div>
-            </TabsContent>
-            <TabsContent className="py-6 flex-1" value="likes">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                <div className="rounded-lg border border-gray-900  p-4 dark:border-gray-800">
-                  <div className="space-y-1">
-                    <h3 className="text-lg font-medium">Exploring the Wonders of Nature</h3>
-                    <p className="text-gray-400 line-clamp-2">
-                      Join me on an adventure as we discover the hidden gems of the great outdoors.
-                    </p>
-                  </div>
-                </div>
-                <div className="rounded-lg border border-gray-900  p-4 dark:border-gray-800">
-                  <div className="space-y-1">
-                    <h3 className="text-lg font-medium">The Art of Minimalism</h3>
-                    <p className="text-gray-400 line-clamp-2">
-                      Discover the beauty in simplicity and learn how to declutter your life.
-                    </p>
-                  </div>
-                </div>
-                <div className="rounded-lg border border-gray-900  p-4 dark:border-gray-800">
-                  <div className="space-y-1">
-                    <h3 className="text-lg font-medium">Cooking for Beginners</h3>
-                    <p className="text-gray-400 line-clamp-2">
-                      Learn essential cooking techniques and create delicious meals with ease.
-                    </p>
-                  </div>
-                </div>
-                <div className="rounded-lg border border-gray-900  p-4 dark:border-gray-800">
+                <div className="rounded-lg border border-gray-900 p-4 dark:border-gray-800">
                   <div className="space-y-1">
                     <h3 className="text-lg font-medium">The Power of Meditation</h3>
                     <p className="text-gray-400 line-clamp-2">
@@ -222,6 +127,5 @@ function TwitterIcon(props: TwitterIconProps) {
     </svg>
   );
 }
-
 
 export default UserPage;

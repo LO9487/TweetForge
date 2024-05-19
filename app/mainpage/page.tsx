@@ -1,12 +1,20 @@
+"use client"
 import React from 'react';
-import { Button } from "@/components/ui/button"
-import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar"
-import { DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
-import { Textarea } from "@/components/ui/textarea"
+import { useRouter } from 'next/navigation';
+import { Button } from "@/components/ui/button";
+import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
+import { DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu";
+import { Textarea } from "@/components/ui/textarea";
 
 interface MainPageProps {}
 
 const MainPage: React.FC<MainPageProps> = () => {
+  const router = useRouter();
+
+  const handleProfileClick = () => {
+    router.push('/profile');
+  };
+
   return (
     <div className="flex flex-col h-screen">
       <header className="bg-gray-900 text-white py-4 px-6 shadow-md">
@@ -30,7 +38,7 @@ const MainPage: React.FC<MainPageProps> = () => {
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleProfileClick}>Profile</DropdownMenuItem>
                 <DropdownMenuItem>Settings</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Logout</DropdownMenuItem>
@@ -59,7 +67,7 @@ const MainPage: React.FC<MainPageProps> = () => {
         </div>
       </main>
     </div>
-  )
+  );
 }
 
 interface MessageCircleIconProps {
@@ -82,7 +90,7 @@ const MessageCircleIcon: React.FC<MessageCircleIconProps> = (props) => {
     >
       <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" />
     </svg>
-  )
+  );
 }
 
 interface SignalIconProps {
@@ -109,7 +117,7 @@ const SignalIcon: React.FC<SignalIconProps> = (props) => {
       <path d="M17 20V8" />
       <path d="M22 4v16" />
     </svg>
-  )
+  );
 }
 
 interface TwitterIconProps {
@@ -132,7 +140,7 @@ const TwitterIcon: React.FC<TwitterIconProps> = (props) => {
     >
       <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
     </svg>
-  )
+  );
 }
 
 export default MainPage;
